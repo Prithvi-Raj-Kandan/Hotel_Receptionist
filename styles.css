@@ -1,0 +1,112 @@
+.container {
+    max-width: 400px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 24px 16px 80px 16px;
+    position: relative;
+}
+
+.chat-area {
+    min-height: 320px;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.message {
+    padding: 10px 16px;
+    border-radius: 18px;
+    max-width: 80%;
+    font-size: 1rem;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.message.user {
+    background: #e0f7fa;
+    align-self: flex-end;
+}
+
+.message.bot {
+    background: #f1f8e9;
+    align-self: flex-start;
+}
+
+.mic-btn {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.15);
+    transition: background 0.2s;
+}
+
+.mic-btn:active {
+    background: #1565c0;
+}
+
+.mic-visualizer {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    width: 36px;
+    gap: 3px;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bar {
+    width: 4px;
+    background: #fff;
+    border-radius: 2px;
+    animation: bounce 1s infinite;
+    height: 10px;
+    transition: height 0.2s;
+    /* Center the bar vertically */
+    transform-origin: center;
+}
+
+.bar:nth-child(1), .bar:nth-child(5) {
+    animation: bounce-small 1s infinite;
+    height: 10px;
+}
+.bar:nth-child(2), .bar:nth-child(4) {
+    animation: bounce-medium 1s infinite;
+    height: 18px;
+}
+.bar:nth-child(3) {
+    animation: bounce-large 1s infinite;
+    height: 28px;
+}
+
+@keyframes bounce-small {
+    0%, 100% { height: 10px; }
+    50% { height: 16px; }
+}
+@keyframes bounce-medium {
+    0%, 100% { height: 18px; }
+    50% { height: 24px; }
+}
+@keyframes bounce-large {
+    0%, 100% { height: 28px; }
+    50% { height: 36px; }
+} 
