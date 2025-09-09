@@ -3,23 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voice Bot</title>
+    <title>AI Receptionist Interface</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <div id="chat-area" class="chat-area"></div>
-        <button id="mic-btn" class="mic-btn">
-            <span id="mic-icon">🎤</span>
-            <div id="mic-visualizer" class="mic-visualizer" style="display:none;">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
+        <header class="header">
+            <h1 class="logo">Ai Receptionist</h1>
+        </header>
+        
+        <main class="chat-container">
+            <div id="chat-area" class="chat-area">
+                <!-- Messages will be dynamically added here -->
             </div>
-        </button>
+        </main>
+        
+        <div class="mic-container">
+            <button id="mic-btn" class="mic-btn">
+                <svg id="mic-icon" class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4z"/>
+                    <path d="M19 10v1a7 7 0 0 1-14 0v-1"/>
+                    <line x1="12" y1="19" x2="12" y2="23"/>
+                    <line x1="8" y1="23" x2="16" y2="23"/>
+                </svg>
+                <div id="mic-visualizer" class="mic-visualizer">
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring pulse-ring-delay-1"></div>
+                    <div class="pulse-ring pulse-ring-delay-2"></div>
+                </div>
+            </button>
+        </div>
+        
+        <footer class="footer">
+            <p>&copy; Ai Receptionist 2025</p>
+        </footer>
     </div>
-    <script src="app.js"></script>
+    
+    <script src="newapp.js"></script>
 </body>
-</html> 
+</html>
