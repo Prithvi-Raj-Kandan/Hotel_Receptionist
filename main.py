@@ -57,61 +57,6 @@ log_process("✓ ElevenLabs client initialized")
 
 log_process("🚀 VoiceBot backend ready!")
 
-@app.post("/stt")
-async def speech_to_text(file: UploadFile = File(...)):
-    overall_start = time.time()
-    log_process("🎤 STT Request: Starting speech-to-text conversion", overall_start)
-    audio_bytes = await file.read()
-    input_path = os.path.join(UPLOAD_DIR, file.filename or "input.webm")
-    with open(input_path, "wb") as f:
-        f.write(audio_bytes)
-    audio = AudioSegment.from_file(io.BytesIO(audio_bytes), format="webm")
-    audio = audio.set_frame_rate(16000).set_channels(1)
-    wav_io = io.BytesIO()
-    audio.export(wav_io, format="wav")
-    wav_io.seek(0)
-    try:
-        response = await deepgram.transcription.prerecorded({
-            "buffer": wav_io.read(),
-            "mimetype": "audio/wav"
-        }, {
-            "smart_format": True,
-            "model": "nova-2",
-            "language": "en-US"
-        })
-        text = response["results"]["channels"][0]["alternatives"][0]["transcript"]
-        log_process(f"📝 Transcribed text: '{text}'", overall_start)
-        return {"text": text, "input_audio_path": input_path}
-    except Exception as e:
-        log_process(f"❌ Deepgram STT failed: {e}", overall_start)
-        return {"error": f"STT failed: {str(e)}"}
-
-class TTSRequest(BaseModel):
-    text: str
-
-@app.post("/tts")
-async def text_to_speech(request: TTSRequest):
-    overall_start = time.time()
-    log_process("🔊 TTS Request: Starting text-to-speech conversion", overall_start)
-    try:
-        audio_stream = elevenlabs_client.text_to_speech.convert(
-            voice_id="ulTHPKT60YxEfyrVgZFh",
-            text=request.text,
-            model_id="eleven_multilingual_v2",
-            output_format="mp3_44100_128",
-        )
-        audio_bytes = b"".join(audio_stream)
-        audio_base64 = base64.b64encode(audio_bytes).decode("utf-8")
-        output_filename = f"output_{abs(hash(request.text)) % (10 ** 8)}.mp3"
-        output_path = os.path.join(DOWNLOAD_DIR, output_filename)
-        with open(output_path, "wb") as f:
-            f.write(audio_bytes)
-        log_process(f"✓ Output audio saved: {output_path}", overall_start)
-        return {"audio_base64": audio_base64, "output_audio_path": output_path}
-    except Exception as e:
-        log_process(f"❌ ElevenLabs TTS failed: {e}", overall_start)
-        return {"error": f"TTS failed: {str(e)}"}
-
 @app.post("/voicebot")
 async def voicebot(file: UploadFile = File(...)):
     overall_start = time.time()
