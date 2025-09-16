@@ -23,13 +23,13 @@ from dotenv import load_dotenv
 load_dotenv()  
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-uri = "mongodb+srv://prithviraj82rt:prithvirajjouganrt@hotel-data.rk61lvj.mongodb.net/?retryWrites=true&w=majority&appName=Hotel-data"
+uri = "paste your uri here"
 
 client = MongoClient(
-    uri , appname="langchain-llm-app"
+    uri , appname="your-app-name"
 )
 
-db = MongoDBDatabase.from_connection_string(uri , "Hotel")
+db = MongoDBDatabase.from_connection_string(uri , "Database-Name")
 
 llm = ChatGroq(
     api_key=GROQ_API_KEY,
